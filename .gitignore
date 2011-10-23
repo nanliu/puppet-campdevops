@@ -1,5 +1,5 @@
 auth.conf
-files
+/files
 fileserver.conf
 puppet.conf
-ssl
+/ssl
