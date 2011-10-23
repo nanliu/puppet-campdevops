@@ -1,6 +1,6 @@
 class jboss(
   $jboss_file = $jboss::params::jboss_file
-) {
+) inherits jboss::params {
 
 
   $jboss_path = regsubst($jboss_file, '/\.zip/', '')
