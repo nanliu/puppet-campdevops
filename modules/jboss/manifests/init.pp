@@ -10,6 +10,7 @@ class jboss(
   }
 
   notify { "The value of jboss_path is ${jboss_path}.":}
+  notify { "The value of jboss_file is ${jboss_file}.":}
 
   user { 'jboss':
     ensure => present,
