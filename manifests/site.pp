@@ -37,7 +37,10 @@ node /^db/ {
   class { 'iptables::mysql':
     require => Class['iptables'],
   }
+  $mysql_config = { bind_address      => '127.0.0.1',
+                    root_password     => 'campdevops_r0cks',
+                    etc_root_password => true }
   class { 'mysql::server':
-    root_password => 'campdevops_r0cks',
+    config => $mysql_config,
   }
 }
