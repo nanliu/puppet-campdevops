@@ -48,4 +48,11 @@ node /^db/ {
   class { 'mysql::server':
     config_hash => $mysql_config,
   }
+
+  mysql::db { 'dukesbank':
+    user     => 'dukesbank',
+    password => 'dukesbank',
+    host     => $::hostname,
+    grant    => ['all'],
+  }
 }
