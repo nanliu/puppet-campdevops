@@ -15,7 +15,8 @@ class jenkins {
 
   yumrepo {
     "jenkins" :
-      gpgkey  => "http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key",
+      gpgkey  => "file://${jenkins_key_path}",
+      gpgcheck=> 1,
       baseurl => "http://pkg.jenkins-ci.org/redhat/",
       name    => "Jenkins",
       require => File["${jenkins_key_path}"],
