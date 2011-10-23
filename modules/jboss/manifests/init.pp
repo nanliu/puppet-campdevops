@@ -43,4 +43,25 @@ class jboss(
     creates => "/opt/${jboss_path}",
     require => Package['unzip'],
   }
+
+  file { "/opt/${jboss_path}/bin/run.sh":
+    ensure  => present,
+    require => Exec['unzip-jboss'],
+    mode    => '0755',
+  }
+
+  file { "/opt/${jboss_path}/bin/shutdown.sh":
+    ensure  => present,
+    require => Exec['unzip-jboss'],
+    mode    => '0755',
+  }
+
+  service { 'jboss':
+    ensure    => running,
+    hasstatus => false,
+    pattern   => $jboss_path,
+    start     => "/opt/${jboss_path}/bin/run.sh",
+    stop      => "/opt/${jboss_path}/bin/shutdown.sh",
+    require   => [Exec['unzip-jboss'], File["/opt/${jboss_path}/bin/shutdown.sh"], File["/opt/${jboss_path}/bin/run.sh"]],
+  }
 }
