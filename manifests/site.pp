@@ -4,6 +4,7 @@ node /^build/ {
 }
 
 node /^app/ {
+  class { 'iptables': }
   class {'jboss':
     require => Class['jboss::java'],
   }
