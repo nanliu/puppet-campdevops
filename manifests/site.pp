@@ -1,9 +1,16 @@
 node /^build/ {
   class {'jenkins':
-    require => Class['jboss::java'],
+    require => [
+                Class['jboss::java'],
+                Class['iptables::apps'],
+            ],
   }
   # Forward declaration to add the requirement for the java dependency
   class {'jboss::java': }
+  class { 'iptables': }
+  class { 'iptables::apps':
+    require => Class['iptables'],
+  }
 
   # XXX: disabling artifactory until it's fully fleshed out
   #class{'jboss::artifactory': }
