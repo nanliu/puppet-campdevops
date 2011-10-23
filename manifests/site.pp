@@ -14,15 +14,19 @@ node /^app/ {
   class { 'iptables::apps':
     require => Class['iptables'],
   }
-  class {'jboss':
+  class { 'jboss':
     require => Class['jboss::java'],
   }
-  class {'jboss::java': }
+  class { 'jboss::java': }
 }
 
 node /^deploy/ {
-  class {'jboss::java': }
-  class {'rundeck':}
+  class { 'iptables': }
+  class { 'iptables::deploy':
+    require => Class['iptables'],
+  }
+  class { 'jboss::java': }
+  class { 'rundeck': }
 }
 
 node /^source/ {
