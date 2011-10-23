@@ -57,7 +57,7 @@ class jboss(
   }
 
   file { '/var/log/jboss-log':
-    ensure => present
+    ensure => present,
     mode   => '0644',
   }
 
