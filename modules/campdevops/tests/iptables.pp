@@ -97,5 +97,5 @@ firewall { '082 puppet allow':
 }
 
 resources { 'firewall':
-  purge => false,
+  purge => true,
 }
