@@ -36,7 +36,7 @@ class svn {
 
   exec { 'create_dukesbank':
     command => 'svnadmin create dukesbank',
-    create  => '/var/www/svn/dukesbank',
+    creates => '/var/www/svn/dukesbank',
     cwd     => '/var/www/svn',
     require => File['/var/www/svn'],
   }
