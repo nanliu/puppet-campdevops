@@ -4,3 +4,6 @@
 [submodule "modules/firewall"]
 	path = modules/firewall
 	url = git://github.com/nanliu/puppetlabs-firewall.git
+[submodule "modules/jenkins"]
+	path = modules/jenkins
+	url = git://github.com/rtyler/puppet-jenkins.git
