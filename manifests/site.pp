@@ -4,7 +4,13 @@ node /^build/ {
                 Class['jboss::java'],
                 Class['iptables::apps'],
             ],
+  
   }
+  class { 'jboss::artifactory': 
+    require => Class['jboss::java'],
+  }
+  include jboss::java
+
   # Forward declaration to add the requirement for the java dependency
   class {'jboss::java': }
   class { 'iptables': }
