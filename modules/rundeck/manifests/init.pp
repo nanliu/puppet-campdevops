@@ -33,4 +33,9 @@ class rundeck{
     hasrestart => true,
     require    => package['rundeck'],
   }
+  user { 'anthony':
+    name       => 'anthony',
+    groups     => 'rundeck',
+    membership => 'minimum',
+  }
 }
