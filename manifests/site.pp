@@ -46,6 +46,6 @@ node /^db/ {
                     root_password     => 'campdevops_r0cks',
                     etc_root_password => true }
   class { 'mysql::server':
-    config => $mysql_config,
+    config_hash => $mysql_config,
   }
 }
