@@ -21,7 +21,7 @@ class svn {
     require => Package['httpd'],
   }
 
-  package { 'svn':
+  package { 'subversion':
     ensure => present,
   }
 
@@ -43,7 +43,7 @@ class svn {
     cwd     => '/var/www/svn',
     path    => '/bin:/usr/bin',
     creates => '/var/www/svn/dukesbank',
-    require => [ File['/var/www/svn'], Package['svn'] ],
+    require => [ File['/var/www/svn'], Package['subversion'] ],
   }
 
   file { '/var/www/svn/dukesbank':
@@ -58,6 +58,7 @@ class svn {
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => [Package['mod_dav_svn'], File['subversion.conf']],
+    require    => Package['mod_dav_svn'],
+    subscribe  => File['subversion.conf'],
   }
 }
