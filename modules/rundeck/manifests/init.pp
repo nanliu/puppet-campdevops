@@ -26,7 +26,7 @@ class rundeck{
     ensure  => present,
     require => exec['rundeck_repo'],
   }
-  service { 'rundeck':
+  service { 'rundeckd':
     ensure     => running,
     enable     => true,
     hasstatus  => true,
