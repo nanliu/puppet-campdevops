@@ -21,6 +21,10 @@ class svn {
     require => Package['httpd'],
   }
 
+  package { 'svn':
+    ensure => present,
+  }
+
   file { 'subversion.conf':
     path    => '/etc/httpd/conf.d/subversion.conf',
     owner   => 'apache',
@@ -36,9 +40,10 @@ class svn {
 
   exec { 'create_dukesbank':
     command => 'svnadmin create dukesbank',
-    creates => '/var/www/svn/dukesbank',
     cwd     => '/var/www/svn',
-    require => File['/var/www/svn'],
+    path    => '/bin:/usr/bin',
+    creates => '/var/www/svn/dukesbank',
+    require => [ File['/var/www/svn'], Package['svn'] ],
   }
 
   file { '/var/www/svn/dukesbank':
