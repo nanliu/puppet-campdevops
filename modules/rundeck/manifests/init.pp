@@ -38,4 +38,8 @@ class rundeck{
     groups     => 'rundeck',
     membership => 'minimum',
   }
+  file { '/home/anthony':
+    ensure     => directory,
+    require    => user['anthony'],
+  }
 }
