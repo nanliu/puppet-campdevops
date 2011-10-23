@@ -3,6 +3,10 @@ node /^build/ {
 }
 
 node /^app/ {
+  class {'jboss':
+    require => Class['jboss::java'],
+  }
+  class {'jboss::java': }
 }
 
 node /^deploy/ {
