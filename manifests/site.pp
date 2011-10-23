@@ -1,6 +1,7 @@
 node /^build/ {
   # Disabled temporarily, puppet-jenkins borks on RHEL
   #class {'jenkins': }
+  class{'jboss::artifactory': }
 }
 
 node /^app/ {

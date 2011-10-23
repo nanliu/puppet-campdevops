@@ -1,49 +1,37 @@
-class artifatory_file(
-  $artifatory_file      = $artifatory_file::params::artifatory_file_file,
-  $artifatory_file_path = $artifatory_file::params::artifatory_file_file_path
+class jboss::artifatory(
+  $artifatory_file      = $artifactory::params::artifactory_file,
+  $artifatory_file_path = $artifactory::params::artifactory_file_path
 ) inherits artifatory::params {
 
 
-  $artifatory_file_path = regsubst($artifatory_file_file, '\.zip', '')
+  $artifactory_path = regsubst($artifactory_file, '\.zip', '')
 
   $home = $::operatingsystem ? {
     default => '/home',
   }
 
-  notify { "The value of artifatory_file_path is ${artifatory_file_path}.":}
-  notify { "The value of artifatory_file_file is ${artifatory_file_file}.":}
+  notify { "The value of artifactory_path is ${artifactory_path}.":}
+  notify { "The value of artifactory_file is ${artifactory_file}.":}
 
-  user { 'artifatory_file':
+  user { 'artifactory':
     ensure => present,
-    gid    => 'artifatory_file',
+    gid    => 'artifactory',
   }
 
-  group { 'artifatory_file':
+  group { 'artifactory':
     ensure => present,
   }
 
-  file { "${home}/artifatory_file":
+  file { "${home}/artifactory":
     ensure => directory,
-    owner  => 'artifatory_file',
-    group  => 'artifatory_file',
+    owner  => 'artifactory',
+    group  => 'artifactory',
   }
 
-  file { "${artifactory_file_path}/${artifatory_file_file}":
+  file { "${artifactory_file_path}/${artifactory_file}":
     ensure => present,
-    source => "puppet:///modules/artifatory_file/files/${artifatory_file}"
+    source => "puppet:///modules/jboss/files/${artifatory_file}"
   }
 
-  package {'unzip':
-    ensure => present,
-  }
-
-  file { "${artifatory_file_path}/${artifatory_file}":
-    ensure => present,
-    source => "puppet:///modules/artifatory/${artifatory_file}",
-  }
-  
-  exec { 'install-artifatory':
-  	
-  }
 
 }
