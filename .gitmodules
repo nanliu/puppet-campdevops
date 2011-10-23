@@ -1,6 +1,6 @@
 [submodule "modules/mysql"]
 	path = modules/mysql
-	url = git://github.com/nanliu/puppet-campdevops.git
+	url = git://github.com/nanliu/puppetlabs-mysql.git
 [submodule "modules/firewall"]
 	path = modules/firewall
 	url = git://github.com/nanliu/puppetlabs-firewall.git
