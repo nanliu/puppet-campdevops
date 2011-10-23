@@ -1,4 +1,4 @@
-class jboss::artifatory(
+class jboss::artifactory(
   $artifatory_file      = $jboss::params::artifactory_file,
   $artifatory_file_path = $jboss::params::artifactory_file_path
 ) inherits jboss::params{
