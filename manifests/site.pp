@@ -34,8 +34,11 @@ node /^source/ {
 }
 
 node /^db/ {
+  class { 'iptables': }
+  class { 'iptables::mysql':
+    require => Class['iptables'],
+  }
   class { 'mysql::server':
     root_password => 'campdevops_r0cks',
   }
 }
-
