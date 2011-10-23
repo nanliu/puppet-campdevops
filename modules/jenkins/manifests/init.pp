@@ -9,7 +9,7 @@ class jenkins {
     "${jenkins_key_path}" :
         owner => root,
         group => root,
-        mode  => 0444,
+        mode  => 0644,
         source=> "puppet:///modules/jenkins/jenkins-ci.org.key",
   }
 
