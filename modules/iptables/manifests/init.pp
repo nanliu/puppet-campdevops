@@ -10,6 +10,10 @@
 #
 class iptables{
 
+  class { 'iptables::utils':
+    before => Class['iptables'],
+  }
+
   firewall { '001 input allow all':
     proto       => 'all',
     destination => '0.0.0.0/0',
