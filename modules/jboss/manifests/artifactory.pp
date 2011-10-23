@@ -1,10 +1,8 @@
-class jboss::artifactory(
-  $artifatory_file      = $artifactory::params::artifactory_file,
-  $artifatory_file_path = $artifactory::params::artifactory_file_path
-) inherits artifactory::params {
+class jboss::artifatory(
+  $artifatory_file      = $jboss::params::artifactory_file,
+  $artifatory_file_path = $jboss::params::artifactory_file_path
+) inherits jboss::params{
 
-
-  $artifactory_path = regsubst($artifactory_file, '\.zip', '')
 
   $home = $::operatingsystem ? {
     default => '/home',
@@ -13,25 +11,15 @@ class jboss::artifactory(
   notify { "The value of artifactory_path is ${artifactory_path}.":}
   notify { "The value of artifactory_file is ${artifactory_file}.":}
 
-  user { 'artifactory':
-    ensure => present,
-    gid    => 'artifactory',
-  }
 
-  group { 'artifactory':
-    ensure => present,
-  }
-
-  file { "${home}/artifactory":
-    ensure => directory,
-    owner  => 'artifactory',
-    group  => 'artifactory',
+  file { "/opt/jboss/":
+    ensure => directory
   }
 
   file { "${artifactory_file_path}/${artifactory_file}":
     ensure => present,
-    source => "puppet:///modules/jboss/files/${artifatory_file}"
+    source => "puppet:///modules/jboss/files/${artifatory_file}",
   }
-
+  
 
 }
