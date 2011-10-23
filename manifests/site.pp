@@ -1,7 +1,12 @@
 node /^build/ {
-  # Disabled temporarily, puppet-jenkins borks on RHEL
-  #class {'jenkins': }
-  class{'jboss::artifactory': }
+  class {'jenkins':
+    require => Class['jboss::java'],
+  }
+  # Forward declaration to add the requirement for the java dependency
+  class {'jboss::java': }
+
+  # XXX: disabling artifactory until it's fully fleshed out
+  #class{'jboss::artifactory': }
 }
 
 node /^app/ {
