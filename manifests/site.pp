@@ -3,7 +3,7 @@
 class { 'mcollectivepe':
 }
 
-node /^build/ {
+node /^build1/ {
   class { 'iptables': }
   class { 'iptables::apps':
     require => Class['iptables'],
@@ -13,13 +13,19 @@ node /^build/ {
   class {'jenkins':
     require => Class['jboss::java', 'iptables::apps'],
   }
+}
 
-  class { 'jboss::artifactory':
-    require => Class['jboss::java'],
+node /^build2/ {
+  class { 'iptables': }
+  class { 'iptables::apps':
+    require => Class['iptables'],
   }
 
-  # XXX: disabling artifactory until it's fully fleshed out
-  #class{'jboss::artifactory': }
+  class {'jboss::java': }
+
+  class { 'jboss::artifactory':
+    require => Class['jboss::java', 'iptables::apps'],
+  }
 }
 
 node /^app/ {
