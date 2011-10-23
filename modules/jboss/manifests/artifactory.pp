@@ -1,7 +1,7 @@
-class jboss::artifatory(
+class jboss::artifactory(
   $artifatory_file      = $artifactory::params::artifactory_file,
   $artifatory_file_path = $artifactory::params::artifactory_file_path
-) inherits artifatory::params {
+) inherits artifactory::params {
 
 
   $artifactory_path = regsubst($artifactory_file, '\.zip', '')
