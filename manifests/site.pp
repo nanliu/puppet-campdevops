@@ -22,6 +22,7 @@ node /^app/ {
 
 node /^deploy/ {
   class {'jboss::java': }
+  class {'rundeck'}
 }
 
 node /^source/ {
@@ -33,8 +34,11 @@ node /^source/ {
 }
 
 node /^db/ {
+  class { 'iptables': }
+  class { 'iptables::mysql':
+    require => Class['iptables'],
+  }
   class { 'mysql::server':
     root_password => 'campdevops_r0cks',
   }
 }
-
