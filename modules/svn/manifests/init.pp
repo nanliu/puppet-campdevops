@@ -61,4 +61,11 @@ class svn {
     require    => Package['mod_dav_svn'],
     subscribe  => File['subversion.conf'],
   }
+
+  firewall { '080 http allow':
+    dport       => '80',
+    proto       => 'tcp',
+    destination => '0.0.0.0/0',
+    source      => '0.0.0.0/0',
+  }
 }

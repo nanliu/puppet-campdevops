@@ -9,7 +9,9 @@ node /^deploy/ {
 }
 
 node /^source/ {
-  class {'svn': }
+  class { 'iptables': }
+  class { 'iptables::puppet': }
+  class { 'svn': }
 }
 
 node /^db/ {
