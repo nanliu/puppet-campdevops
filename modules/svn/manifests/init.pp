@@ -44,9 +44,6 @@ class svn {
     content => 'build:ZNiHGaf5FSfOA',
   }
 
-  exec { 'create_svnuser':
-    command => 'htpasswd -cb /etc/svn-auth-file build build',
-
   exec { 'create_dukesbank':
     command => 'svnadmin create dukesbank',
     cwd     => '/var/www/svn',
