@@ -1,4 +1,4 @@
-class jboss::artifatory(
+class jboss::artifactory(
   $artifatory_file      = $jboss::params::artifactory_file,
   $artifatory_file_path = $jboss::params::artifactory_file_path
 ) inherits jboss::params{
@@ -18,7 +18,7 @@ class jboss::artifatory(
 
   file { "${artifactory_file_path}/${artifactory_file}":
     ensure => present,
-    source => "puppet:///modules/jboss/files/${artifatory_file}",
+    source => "puppet:///modules/jboss/${artifatory_file}",
   }
   
 
