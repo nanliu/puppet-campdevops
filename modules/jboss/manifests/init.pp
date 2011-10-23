@@ -56,16 +56,11 @@ class jboss(
     mode    => '0755',
   }
 
-  file { '/var/log/jboss-log':
-    ensure => present,
-    mode   => '0644',
-  }
-
   service { 'jboss':
     ensure    => running,
     hasstatus => false,
     pattern   => $jboss_path,
-    start     => "/opt/${jboss_path}/bin/run.sh > /var/log/jboss-log", 
+    start     => "/opt/${jboss_path}/bin/run.sh &",
     stop      => "/opt/${jboss_path}/bin/shutdown.sh",
     require   => [Exec['unzip-jboss'], File["/opt/${jboss_path}/bin/shutdown.sh"], File["/opt/${jboss_path}/bin/run.sh"]],
   }
