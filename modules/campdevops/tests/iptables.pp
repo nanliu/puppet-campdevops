@@ -60,7 +60,7 @@ firewall { '006 ipp tcp allow all':
   source      => '0.0.0.0/0',
 }
 
-firewall { '007 allow related, established':
+firewall { '007 allow related established':
   proto       => 'all',
   destination => '0.0.0.0/0',
   source      => '0.0.0.0/0',
