@@ -1,46 +1,49 @@
-class jboss(
-  $jboss_file      = $jboss::params::jboss_file,
-  $jboss_file_path = $jboss::params::jboss_file_path
-) inherits jboss::params {
+class artifatory_file(
+  $artifatory_file      = $artifatory_file::params::artifatory_file_file,
+  $artifatory_file_path = $artifatory_file::params::artifatory_file_file_path
+) inherits artifatory::params {
 
 
-  $jboss_path = regsubst($jboss_file, '\.zip', '')
+  $artifatory_file_path = regsubst($artifatory_file_file, '\.zip', '')
 
   $home = $::operatingsystem ? {
     default => '/home',
   }
 
-  notify { "The value of jboss_path is ${jboss_path}.":}
-  notify { "The value of jboss_file is ${jboss_file}.":}
+  notify { "The value of artifatory_file_path is ${artifatory_file_path}.":}
+  notify { "The value of artifatory_file_file is ${artifatory_file_file}.":}
 
-  user { 'jboss':
+  user { 'artifatory_file':
     ensure => present,
-    gid    => 'jboss',
+    gid    => 'artifatory_file',
   }
 
-  group { 'jboss':
+  group { 'artifatory_file':
     ensure => present,
   }
 
-  file { "${home}/jboss":
+  file { "${home}/artifatory_file":
     ensure => directory,
-    owner  => 'jboss',
-    group  => 'jboss',
+    owner  => 'artifatory_file',
+    group  => 'artifatory_file',
   }
 
-  file { "${jboss_file_path}/${jboss_file}":
+  file { "${artifactory_file_path}/${artifatory_file_file}":
     ensure => present,
-    source => "puppet:///modules/jboss/${jboss_file}",
-    before => Exec['unzip-jboss'],
+    source => "puppet:///modules/artifatory_file/files/${artifatory_file}"
   }
 
   package {'unzip':
     ensure => present,
   }
 
-  exec { 'unzip-jboss':
-    command => "/usr/bin/unzip ${jboss_file_path}/${jboss_file} -d /opt",
-    creates => "/opt/${jboss_path}",
-    require => Package['unzip'],
+  file { "${artifatory_file_path}/${artifatory_file}":
+    ensure => present,
+    source => "puppet:///modules/artifatory/${artifatory_file}",
   }
+  
+  exec { 'install-artifatory':
+  	
+  }
+
 }
