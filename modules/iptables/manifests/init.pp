@@ -9,6 +9,7 @@
 # Sample Usage:
 #
 class iptables{
+
   firewall { '001 input allow all':
     proto       => 'all',
     destination => '0.0.0.0/0',
