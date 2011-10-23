@@ -1,0 +1,5 @@
+auth.conf
+files
+fileserver.conf
+puppet.conf
+ssl
