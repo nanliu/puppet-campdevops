@@ -1,10 +1,13 @@
 class jboss(
   $jboss_file      = $jboss::params::jboss_file,
-  $jboss_file_path = $jboss::params::jboss_file_path
+  $stage_path      = $jboss::params::stage_path,
+  $install_path    = $jboss::params::install_path,
+  $mysql_file      = $jboss::params::mysql_file
 ) inherits jboss::params {
 
 
   $jboss_path = regsubst($jboss_file, '\.zip', '')
+  $mysql_path = regsubst($mysql_file, '\.zip', '')
 
   $home = $::operatingsystem ? {
     default => '/home',
@@ -25,10 +28,16 @@ class jboss(
     group  => 'jboss',
   }
 
-  file { "${jboss_file_path}/${jboss_file}":
+  file { "${stage_path}/${jboss_file}":
     ensure => present,
     source => "puppet:///modules/jboss/${jboss_file}",
     before => Exec['unzip-jboss'],
+  }
+
+  file { "${stage_path}/${mysql_file}":
+    ensure => present,
+    source => "puppet:///modules/jboss/${mysql_file}",
+    before => Exec['unzip-mysql'],
   }
 
   package {'unzip':
@@ -36,18 +45,30 @@ class jboss(
   }
 
   exec { 'unzip-jboss':
-    command => "/usr/bin/unzip ${jboss_file_path}/${jboss_file} -d /opt",
-    creates => "/opt/${jboss_path}",
+    command => "/usr/bin/unzip ${stage_path}/${jboss_file} -d ${install_path}",
+    creates => "${install_path}/${jboss_path}",
     require => Package['unzip'],
   }
 
-  file { "/opt/${jboss_path}/bin/run.sh":
+  exec { 'unzip-mysql':
+    command => "/usr/bin/unzip ${stage_path}/${mysql_file} -d ${install_path}",
+    creates => "${install_path}/${mysql_path}",
+    require => Package['unzip'],
+  }
+
+  file { "${install_path}/${jboss_path}/server/default/lib/${mysql_path}-bin.jar":
+    ensure  => present,
+    source  => "${install_path}/${mysql_path}/${mysql_path}-bin.jar",
+    require => Exec['unzip-mysql'],
+  }
+
+  file { "${install_path}/${jboss_path}/bin/run.sh":
     ensure  => present,
     require => Exec['unzip-jboss'],
     mode    => '0755',
   }
 
-  file { "/opt/${jboss_path}/bin/shutdown.sh":
+  file { "${install_path}/${jboss_path}/bin/shutdown.sh":
     ensure  => present,
     require => Exec['unzip-jboss'],
     mode    => '0755',
@@ -57,8 +78,8 @@ class jboss(
     ensure    => running,
     hasstatus => false,
     pattern   => $jboss_path,
-    start     => "/opt/${jboss_path}/bin/run.sh &",
-    stop      => "/opt/${jboss_path}/bin/shutdown.sh",
-    require   => [Exec['unzip-jboss'], File["/opt/${jboss_path}/bin/shutdown.sh"], File["/opt/${jboss_path}/bin/run.sh"]],
+    start     => "${install_path}/${jboss_path}/bin/run.sh &",
+    stop      => "${install_path}/${jboss_path}/bin/shutdown.sh",
+    require   => [Exec['unzip-jboss'], File["${install_path}/${jboss_path}/bin/shutdown.sh"], File["${install_path}/${jboss_path}/bin/run.sh"]],
   }
 }

@@ -1,3 +1,4 @@
+include jboss::java
 
 class {
   "jenkins" :
