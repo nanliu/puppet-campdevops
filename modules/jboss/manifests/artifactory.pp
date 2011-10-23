@@ -18,7 +18,7 @@ class jboss::artifactory(
 
   file { "${artifactory_file_path}/${artifactory_file}":
     ensure => present,
-    source => "puppet:///modules/jboss/${artifatory_file}",
+    source => "puppet:///modules/jboss/${artifactory_file}",
   }
   
 
