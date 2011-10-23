@@ -11,6 +11,15 @@ class jenkins::configure inherits jenkins {
       notify     => Service["jenkins"],
       source     => "puppet:///modules/jenkins/core.config.xml";
 
+    "${jenkins_path}/hudson.tasks.Ant.xml" :
+      ensure     => present,
+      require    => [
+                      User["jenkins"],
+                      Package["jenkins"],
+                    ],
+      notify     => Service["jenkins"],
+      source     => "puppet:///modules/jenkins/hudson.tasks.Ant.xml";
+
     "${jenkins_path}/plugins/rundeck.hpi" :
       ensure     => present,
       require    => [
