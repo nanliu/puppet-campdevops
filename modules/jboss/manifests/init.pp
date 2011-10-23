@@ -2,11 +2,14 @@ class jboss(
   $jboss_file = $jboss::params::jboss_file
 ) {
 
+
   $jboss_path = regsubst($jboss_file, '.zip', '')
 
   $home = $::operatingsystem ? {
     default => '/home',
   }
+
+  notify { "The value of jboss_path is ${jboss_path}.":}
 
   user { 'jboss':
     ensure => present,
