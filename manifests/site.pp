@@ -10,6 +10,7 @@ node /^app/ {
 }
 
 node /^deploy/ {
+  class {'jboss::java': }
 }
 
 node /^source/ {
