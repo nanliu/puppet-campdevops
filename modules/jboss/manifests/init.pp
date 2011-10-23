@@ -1,9 +1,10 @@
 class jboss(
-  $jboss_file = $jboss::params::jboss_file
+  $jboss_file      = $jboss::params::jboss_file,
+  $jboss_file_path = $jboss::params::jboss_file_path
 ) inherits jboss::params {
 
 
-  $jboss_path = regsubst($jboss_file, '/\.zip/', '')
+  $jboss_path = regsubst($jboss_file, '\.zip', '')
 
   $home = $::operatingsystem ? {
     default => '/home',
@@ -27,7 +28,7 @@ class jboss(
     group  => 'jboss',
   }
 
-  file { "/var/tmp/${jboss_file}":
+  file { "${jboss_file_path}/${jboss_file}":
     ensure => present,
     source => "puppet:///modules/jboss/${jboss_file}",
     before => Exec['unzip-jboss'],
@@ -38,7 +39,7 @@ class jboss(
   }
 
   exec { 'unzip-jboss':
-    command => "/usr/bin/unzip ${jboss_file} -d /opt",
+    command => "/usr/bin/unzip ${jboss_file_path}/${jboss_file} -d /opt",
     creates => "/opt/${jboss_path}",
     require => Package['unzip'],
   }
