@@ -14,7 +14,7 @@
 class rundeck{
   file { 'latest.rpm':
     path    => '/tmp/latest.rpm',
-    source  => 'puppet:///modules/rundeck/files/latest.rpm',
+    source  => 'puppet:///modules/rundeck/latest.rpm',
   }
   exec { 'rundeck_repo':
     command => 'rpm -i /tmp/latest.rpm',
@@ -25,8 +25,8 @@ class rundeck{
   package { 'rundeck':
     ensure  => present,
     require => exec['rundeck_repo'],
-
-  service { 'rundeck':
+  }
+  service { 'rundeckd':
     ensure     => running,
     enable     => true,
     hasstatus  => true,

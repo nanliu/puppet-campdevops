@@ -60,6 +60,7 @@ class jboss(
     ensure  => present,
     source  => "${install_path}/${mysql_path}/${mysql_path}-bin.jar",
     require => Exec['unzip-mysql'],
+    notify  => Service['jboss'],
   }
 
   file { "${install_path}/${jboss_path}/bin/run.sh":
@@ -80,6 +81,7 @@ class jboss(
     pattern   => $jboss_path,
     start     => "${install_path}/${jboss_path}/bin/run.sh &",
     stop      => "${install_path}/${jboss_path}/bin/shutdown.sh",
+    restart   => "${install_path}/${jboss_path}/bin/shutdown.sh -S && /bin/sleep 10 && ${install_path}/${jboss_path}/bin/run.sh &",
     require   => [Exec['unzip-jboss'], File["${install_path}/${jboss_path}/bin/shutdown.sh"], File["${install_path}/${jboss_path}/bin/run.sh"]],
   }
 }

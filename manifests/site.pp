@@ -22,6 +22,7 @@ node /^app/ {
 
 node /^deploy/ {
   class {'jboss::java': }
+  class {'rundeck':}
 }
 
 node /^source/ {
