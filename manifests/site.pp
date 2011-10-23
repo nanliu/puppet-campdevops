@@ -11,6 +11,9 @@ node /^build/ {
 
 node /^app/ {
   class { 'iptables': }
+  class { 'iptables::apps':
+    require => Class['iptables'],
+  }
   class {'jboss':
     require => Class['jboss::java'],
   }
@@ -23,7 +26,9 @@ node /^deploy/ {
 
 node /^source/ {
   class { 'iptables': }
-  class { 'iptables::puppet': }
+  class { 'iptables::puppet':
+    require => Class['iptables'],
+  }
   class { 'svn': }
 }
 
