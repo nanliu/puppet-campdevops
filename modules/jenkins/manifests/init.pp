@@ -26,6 +26,11 @@ class jenkins {
       require => YumRepo["jenkins"],
   }
 
+  user {
+    "jenkins" :
+      ensure => present;
+  }
+
   service {
     "jenkins" :
       enable  => true,
