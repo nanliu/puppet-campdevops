@@ -21,10 +21,11 @@ node /^build2/ {
     require => Class['iptables'],
   }
 
+  class {'jboss': }
   class {'jboss::java': }
 
   class { 'jboss::artifactory':
-    require => Class['jboss::java', 'iptables::apps'],
+    require => Class['jboss::java', 'jboss', 'iptables::apps'],
   }
 }
 
