@@ -3,7 +3,7 @@ class jboss(
 ) {
 
 
-  $jboss_path = regsubst($jboss_file, '.zip', '')
+  $jboss_path = regsubst($jboss_file, '/\.zip/', '')
 
   $home = $::operatingsystem ? {
     default => '/home',
