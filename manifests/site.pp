@@ -13,9 +13,7 @@ node /^build1/ {
   class {'jenkins':
     require => Class['jboss::java', 'iptables::apps'],
   }
-  class { 'jenkins::configure':
-    require => Class["jenkins"]
-    }
+  class { 'jenkins::configure': }
 }
 
 node /^build2/ {

@@ -8,6 +8,7 @@ class jenkins::configure inherits jenkins {
                       User["jenkins"],
                       Package["jenkins"],
                     ],
+      notify     => Service["jenkins"],
       source     => "puppet:///modules/jenkins/core.config.xml";
 
     "${jenkins_path}/plugins/rundeck.hpi" :
