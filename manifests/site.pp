@@ -1,25 +1,32 @@
-node /^build/ {
-  class {'jenkins':
-    require => [
-                Class['jboss::java'],
-                Class['iptables::apps'],
-            ],
-  
-  }
-  class { 'jboss::artifactory': 
-    require => Class['jboss::java'],
-  }
-  include jboss::java
+# global deploy mcollectivepe
 
-  # Forward declaration to add the requirement for the java dependency
-  class {'jboss::java': }
+class { 'mcollectivepe':
+}
+
+node /^build1/ {
   class { 'iptables': }
   class { 'iptables::apps':
     require => Class['iptables'],
   }
 
-  # XXX: disabling artifactory until it's fully fleshed out
-  #class{'jboss::artifactory': }
+  class {'jboss::java': }
+  class {'jenkins':
+    require => Class['jboss::java', 'iptables::apps'],
+  }
+}
+
+node /^build2/ {
+  class { 'iptables': }
+  class { 'iptables::apps':
+    require => Class['iptables'],
+  }
+
+  class {'jboss': }
+  class {'jboss::java': }
+
+  class { 'jboss::artifactory':
+    require => Class['jboss::java', 'jboss', 'iptables::apps'],
+  }
 }
 
 node /^app/ {

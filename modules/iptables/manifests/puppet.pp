@@ -12,4 +12,11 @@ class iptables::puppet {
     destination => '0.0.0.0/0',
     source      => '0.0.0.0/0',
   }
+
+  firewall { '090 mcollective allow':
+    dport       => '61613',
+    proto       => 'tcp',
+    destination => '0.0.0.0/0',
+    source      => '0.0.0.0/0',
+  }
 }
