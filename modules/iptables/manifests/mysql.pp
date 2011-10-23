@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class iptables::mysql inherits iptables() {
+class iptables::mysql {
   firewall { '084 mysql allow':
     dport       => '3306',
     proto       => 'tcp',
