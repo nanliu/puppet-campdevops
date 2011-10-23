@@ -1,5 +1,6 @@
 node /^build/ {
-  class {'jenkins': }
+  # Disabled temporarily, puppet-jenkins borks on RHEL
+  #class {'jenkins': }
 }
 
 node /^app/ {
@@ -10,6 +11,7 @@ node /^app/ {
 }
 
 node /^deploy/ {
+  class {'jboss::java': }
 }
 
 node /^source/ {
