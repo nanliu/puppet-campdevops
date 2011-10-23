@@ -8,7 +8,7 @@ node /^app/ {
 node /^deploy/ {
 }
 
-node /^souce/ {
+node /^source/ {
   class {'svn': }
 }
 
